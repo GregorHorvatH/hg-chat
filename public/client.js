@@ -10,6 +10,19 @@ const refs = {
 refs.userName.textContent = userName;
 refs.form.addEventListener('submit', handleFormSubmit);
 socket.on('chat message', handleChatMessage);
+socket.on('history', handleHistory);
+
+function handleHistory(history) {
+  console.log(history);
+
+  refs.messages.insertAdjacentHTML(
+    'beforeend',
+    history
+      .reverse()
+      .map(({ message, userName }) => `<li>${userName}: ${message}</li>`)
+      .join(''),
+  );
+}
 
 function handleChatMessage({ message, userName }) {
   console.log(message);

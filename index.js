@@ -4,6 +4,8 @@ const http = require('http').createServer(app);
 const PORT = process.env.PORT || 5000;
 const io = require('socket.io')(http);
 
+const history = [];
+
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
@@ -11,14 +13,16 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  // console.log('a user connected');
+  socket.emit('history', history);
 
-  socket.on('disconnect', (socket) => {
-    console.log('a user disconnected');
-  });
+  // socket.on('disconnect', (socket) => {
+  //   console.log('a user disconnected');
+  // });
 
   socket.on('chat message', (msg) => {
-    console.log('message: ' + JSON.stringify(msg));
+    // console.log('message: ' + JSON.stringify(msg));
+    history.push(msg);
     io.emit('chat message', msg);
   });
 });
