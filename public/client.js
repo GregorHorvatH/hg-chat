@@ -13,7 +13,8 @@ socket.on('chat message', handleChatMessage);
 socket.on('history', handleHistory);
 
 function handleHistory(history) {
-  console.log(history);
+  // console.log(history);
+  refs.messages.innerHTML = '';
 
   refs.messages.insertAdjacentHTML(
     'beforeend',
